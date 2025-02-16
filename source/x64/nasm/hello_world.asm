@@ -12,8 +12,9 @@ section .text
 write_console:
     ; parameters: string, string_length
     ; variables: string, string_length
+    ; return: None
 
-    ; preamble
+    ; pre-amble
     push rbp
     mov rbp, rsp
     sub rsp, STACK_SIZE
@@ -22,14 +23,14 @@ write_console:
     mov [rsp], rdi
     mov [rsp + 8], rsi
 
-    ; write to console the string x bytes
+    ; write to console string_length bytes of string
     mov rdi, 1
     mov rsi, [rsp]
     mov rdx, [rsp + 8]
     mov rax, SYS_WRITE
     syscall
 
-    ; postable
+    ; post-amble
     add rsp, STACK_SIZE
     pop rbp
     ret
