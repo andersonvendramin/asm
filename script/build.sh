@@ -1,10 +1,10 @@
 #!/bin/bash
 
-cd "$(dirname "$0")" || exit
+SCRIPT_SOURCE="${BASH_SOURCE[0]}"
+SCRIPT_PATH="$(realpath "$SCRIPT_SOURCE")"
+SCRIPT_DIRECTORY="$(dirname "$SCRIPT_PATH")"
+
+cd "$SCRIPT_DIRECTORY"
 cd ../build
-
-# nasm -f elf64 ../source/nasm/disassembler/disassembler.asm -o disassembler.o
-# ld -o disassembler -e main disassembler.o
-
-nasm -f elf64 ../source/x64/nasm/hello_world.asm -o hello_world.o
-ld -o hello_world -e main hello_world.o
+nasm -felf64 ../source/x64/nasm/hello_world.asm -o ./hello_world.o
+ld hello_world.o -e main -o ./hello_world
