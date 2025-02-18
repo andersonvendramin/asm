@@ -15,7 +15,9 @@ section .text
     extern ExitProcess
 
 main:
-    ; stack shadow space and stack alignment (32 + 8)
+    ; function pre-amble
+    push rbp
+    mov rbp, rsp
     sub rsp, STACK_ALIGN
 
     ; Get the standard output handle
@@ -30,6 +32,8 @@ main:
     mov qword [rsp + 32], 0
     call WriteConsoleA
 
-    ; exit the process
-    mov ecx, 0
-    call ExitProcess
+    ; function post-amble
+    add rsp, STACK_ALIGN
+    pop rbp
+    xor rax, rax
+    ret
